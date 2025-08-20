@@ -1,0 +1,42 @@
+body {
+  font-family: sans-serif;
+}
+
+h1 {
+  text-align: center;
+}
+
+#container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas:
+    'display display display display'
+    'clear clear clear divide'
+    '. . . .'
+    '. . . .'
+    '. . . .'
+    'zero zero zero equals';
+  width: 360px;
+  margin: 0 auto;
+}
+
+#display {
+  grid-area: display;
+  text-align: right;
+}
+
+button[value='clear'] {
+  grid-area: clear;
+}
+
+button[value='divide'] {
+  grid-area: divide;
+}
+
+button[value='0'] {
+  grid-area: zero;
+}
+
+button[value='equals'] {
+  grid-area: equals;
+}

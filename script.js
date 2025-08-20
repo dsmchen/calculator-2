@@ -73,6 +73,8 @@ displayCharacter.forEach((char) =>
 
 function handleEquals(lastOperator = 0) {
   let expression = display.textContent;
+  let expressionRegex = /-?\d+\D\d+/g;
+  if (!expression.match(expressionRegex)) return;
   let numbers = expression.match(/\d+/g);
   numberA = Number(numbers[0]);
   numberB = Number(numbers[1]);

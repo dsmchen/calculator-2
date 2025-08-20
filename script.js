@@ -51,6 +51,7 @@ function operate(operator, a, b) {
 
 const display = document.querySelector('#display');
 const equals = document.querySelector('button[value=equals]');
+const clear = document.querySelector('button[value=clear]');
 
 function handleDisplay(e) {
   if (display.textContent === '0' && e.target.classList.contains('digit')) {
@@ -73,8 +74,10 @@ displayCharacter.forEach((char) =>
 
 function handleEquals(lastOperator = 0) {
   let expression = display.textContent;
+
   let expressionRegex = /-?\d+\D\d+/g;
   if (!expression.match(expressionRegex)) return;
+
   let numbers = expression.match(/\d+/g);
   numberA = Number(numbers[0]);
   numberB = Number(numbers[1]);
@@ -86,3 +89,8 @@ function handleEquals(lastOperator = 0) {
   }
 }
 equals.addEventListener('click', handleEquals);
+
+function handleClear() {
+  display.textContent = 0;
+}
+clear.addEventListener('click', handleClear);

@@ -78,6 +78,12 @@ function handleEquals(lastOperator = 0) {
   let expressionRegex = /-?\d+\D\d+/g;
   if (!expression.match(expressionRegex)) return;
 
+  let divideByZeroRegex = /÷0/;
+  if (expression.match(divideByZeroRegex)) {
+    console.log('divide by zero');
+    return (display.textContent = 'Undefined');
+  }
+
   let numbers = expression.match(/\d+/g);
   numberA = Number(numbers[0]);
   numberB = Number(numbers[1]);

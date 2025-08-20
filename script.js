@@ -19,20 +19,24 @@ let numberA;
 let numberB;
 
 function operate(operator, a, b) {
+  let sum = 0;
+
   switch (operator) {
     case '+':
-      display.textContent = add(a, b);
+      sum = add(a, b);
       break;
     case '−':
-      display.textContent = subtract(a, b);
+      sum = subtract(a, b);
       break;
     case '×':
-      display.textContent = multiply(a, b);
+      sum = multiply(a, b);
       break;
     case '÷':
-      display.textContent = divide(a, b);
+      sum = divide(a, b);
       break;
   }
+
+  display.textContent = sum.toFixed(15);
 }
 
 const display = document.querySelector('#display');

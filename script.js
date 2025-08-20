@@ -1,17 +1,17 @@
 function add(a, b) {
-  a + b;
+  return a + b;
 }
 
 function subtract(a, b) {
-  a - b;
+  return a - b;
 }
 
 function multiply(a, b) {
-  a * b;
+  return a * b;
 }
 
 function divide(a, b) {
-  a / b;
+  return a / b;
 }
 
 let operator;
@@ -20,32 +20,41 @@ let numberB;
 
 function operate(operator, a, b) {
   switch (operator) {
-    case 'add':
-      add(a, b);
+    case '+':
+      display.textContent = add(a, b);
       break;
-    case 'subtract':
-      subtract(a, b);
+    case '−':
+      display.textContent = subtract(a, b);
       break;
-    case 'multiply':
-      multiply(a, b);
+    case '×':
+      display.textContent = multiply(a, b);
       break;
-    case 'divide':
-      divide(a, b);
+    case '÷':
+      display.textContent = divide(a, b);
       break;
-    default:
-      'Sorry, something went wrong. Please try again later.';
   }
 }
 
+const display = document.querySelector('#display');
+const equals = document.querySelector('button[value=equals]');
+
 function handleDisplay(e) {
-  const display = document.querySelector('#display');
   if (display.textContent === '0' && e.target.classList.contains('digit')) {
     display.textContent = '';
   }
   display.textContent += e.target.value;
 }
-
 const displayCharacter = document.querySelectorAll('.display-character');
 displayCharacter.forEach((char) =>
   char.addEventListener('click', handleDisplay)
 );
+
+function handleEquals() {
+  let expression = display.textContent;
+  let numbers = expression.match(/\d+/g);
+  numberA = Number(numbers[0]);
+  numberB = Number(numbers[1]);
+  operator = expression.match(/\D/g)[0];
+  operate(operator, numberA, numberB);
+}
+equals.addEventListener('click', handleEquals);

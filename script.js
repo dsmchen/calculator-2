@@ -36,7 +36,17 @@ function operate(operator, a, b) {
       break;
   }
 
-  display.textContent = sum.toFixed(15);
+  function isLongDecimal(num) {
+    return (
+      num.toString().includes('.') && num.toString().split('.')[1].length > 15
+    );
+  }
+
+  if (isLongDecimal(sum)) {
+    display.textContent = sum.toFixed(15);
+  } else {
+    display.textContent = sum;
+  }
 }
 
 const display = document.querySelector('#display');

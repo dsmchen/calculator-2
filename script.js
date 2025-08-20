@@ -36,3 +36,16 @@ function operate(operator, a, b) {
       'Sorry, something went wrong. Please try again later.';
   }
 }
+
+function handleDisplay(e) {
+  const display = document.querySelector('#display');
+  if (display.textContent === '0' && e.target.classList.contains('digit')) {
+    display.textContent = '';
+  }
+  display.textContent += e.target.value;
+}
+
+const displayCharacter = document.querySelectorAll('.display-character');
+displayCharacter.forEach((char) =>
+  char.addEventListener('click', handleDisplay)
+);

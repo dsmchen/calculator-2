@@ -52,18 +52,33 @@ function operate(operator, a, b) {
 const display = document.querySelector('#display');
 const equals = document.querySelector('button[value=equals]');
 const clear = document.querySelector('button[value=clear]');
+let operatorRegex = /\D/g;
+let expressionRegex = /-?\d+\D\d+/g;
 
 function handleDisplay(e) {
-  if (display.textContent === '0' && e.target.classList.contains('digit')) {
+  let expression = display.textContent;
+
+  if (expression === '0' && e.target.classList.contains('digit')) {
+    // Init display for digit
     display.textContent = '';
   }
-  const operatorRegex = /\D/;
+
+  let numOpRegex = /^-?\d+\D$/;
+  if (expression.match(numOpRegex) && e.target.classList.contains('operator')) {
+    // Change operator
+    let operator = expression.match(operatorRegex)[0];
+    if (operator === e.target.value) return;
+    display.textContent = expression.replace(operator, '');
+  }
+
   if (
-    operatorRegex.test(display.textContent) &&
+    expression.match(expressionRegex) &&
     e.target.classList.contains('operator')
   ) {
+    // Operate long expression
     handleEquals(e.target.value);
   } else {
+    // Display character
     display.textContent += e.target.value;
   }
 }
@@ -75,22 +90,22 @@ displayCharacter.forEach((char) =>
 function handleEquals(lastOperator = 0) {
   let expression = display.textContent;
 
-  let expressionRegex = /-?\d+\D\d+/g;
   if (!expression.match(expressionRegex)) return;
 
   let divideByZeroRegex = /÷0/;
   if (expression.match(divideByZeroRegex)) {
-    console.log('divide by zero');
     return (display.textContent = 'Undefined');
   }
 
-  let numbers = expression.match(/\d+/g);
+  let numberRegex = /\d+/g;
+  let numbers = expression.match(numberRegex);
   numberA = Number(numbers[0]);
   numberB = Number(numbers[1]);
-  operator = expression.match(/\D/g)[0];
+  operator = expression.match(operatorRegex)[0];
   operate(operator, numberA, numberB);
 
   if (lastOperator && typeof lastOperator !== 'object') {
+    // Display long expression
     display.textContent += lastOperator;
   }
 }

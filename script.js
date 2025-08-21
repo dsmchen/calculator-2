@@ -54,13 +54,18 @@ const equals = document.querySelector('button[value=equals]');
 const clear = document.querySelector('button[value=clear]');
 let operatorRegex = /\D/g;
 let expressionRegex = /-?\d+\D\d+/g;
+let isFinalResult = false;
 
 function handleDisplay(e) {
   let expression = display.textContent;
 
-  if (expression === '0' && e.target.classList.contains('digit')) {
+  if (
+    (expression === '0' || isFinalResult) &&
+    e.target.classList.contains('digit')
+  ) {
     // Init display for digit
     display.textContent = '';
+    isFinalResult = false;
   }
 
   let numOpRegex = /^-?\d+\D$/;
@@ -103,10 +108,12 @@ function handleEquals(lastOperator = 0) {
   numberB = Number(numbers[1]);
   operator = expression.match(operatorRegex)[0];
   operate(operator, numberA, numberB);
+  isFinalResult = true;
 
   if (lastOperator && typeof lastOperator !== 'object') {
     // Display long expression
     display.textContent += lastOperator;
+    isFinalResult = false;
   }
 }
 equals.addEventListener('click', handleEquals);
